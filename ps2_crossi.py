@@ -51,13 +51,13 @@ def evaluate_poly(poly, x):
 """
 
 def compute_deriv(poly):
-    y = 0
-    deriv_tuple = (poly[0])
-    for i in range (len(poly)):
-       if (y - 1) <= 0:
-           deriv_tuple = deriv_tuple + 0.0
+    y = 1
+    deriv_tuple = (0.0,)
+    for i in range (1,len(poly)):
+       if poly[y] == 0.0:
+           deriv_tuple = deriv_tuple
        else:
-           deriv_tuple = deriv_tuple + (poly[y] * y**(y-1))
+           deriv_tuple = deriv_tuple + ((poly[y] * y),)
 
        y += 1
 
