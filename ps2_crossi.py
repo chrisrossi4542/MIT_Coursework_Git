@@ -63,9 +63,9 @@ def compute_deriv(poly):
 
     return deriv_tuple
 
-poly = (-13.39, 0.0, 17.5, 3.0, 1.0)
-
-print compute_deriv(poly)
+##poly = (-13.39, 0.0, 17.5, 3.0, 1.0)
+##
+##print compute_deriv(poly)
 
 
 
@@ -88,4 +88,23 @@ print compute_deriv(poly)
     epsilon: float > 0
     returns: tuple (float, int)
 """
-##def compute_root(poly, x_0, epsilon):
+def compute_root(poly, x_0, epsilon):
+    y = 0
+    f_x = evaluate_poly(poly, x_0)
+    f_deriv = compute_deriv(poly)
+
+    while abs(f_x) > epsilon:
+
+        x_0 = x_0 - f_x / f_deriv
+        y =+ 1
+
+    return (x_0, y)
+
+##poly = (-13.39, 0.0, 17.5, 3.0, 1.0) 
+##x_0 = 0.1 
+##epsilon = .0001
+##print compute_root(poly, x_0, epsilon)
+
+
+
+    
