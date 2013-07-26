@@ -91,19 +91,22 @@ def compute_deriv(poly):
 def compute_root(poly, x_0, epsilon):
     y = 0
     f_x = evaluate_poly(poly, x_0)
-    f_deriv = compute_deriv(poly)
+    f_deriv = evaluate_poly(compute_deriv(poly), x_0)
 
     while abs(f_x) > epsilon:
 
-        x_0 = x_0 - f_x / f_deriv
-        y =+ 1
+        f_x = evaluate_poly(poly, x_0)
+        f_deriv = evaluate_poly(compute_deriv(poly), x_0)
+        x_0 = x_0 - (f_x / f_deriv)
+        y += 1
+        print 'The current guess is: ', x_0
 
     return (x_0, y)
 
-##poly = (-13.39, 0.0, 17.5, 3.0, 1.0) 
-##x_0 = 0.1 
-##epsilon = .0001
-##print compute_root(poly, x_0, epsilon)
+poly = (-13.39, 0.0, 17.5, 3.0, 1.0) 
+x_0 = 0.1 
+epsilon = .0001
+print compute_root(poly, x_0, epsilon)
 
 
 
