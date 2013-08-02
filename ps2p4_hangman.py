@@ -44,29 +44,35 @@ def choose_word(wordlist):
 # the wordlist variable so that it can be accessed from anywhere
 # in the program
 
-
+alphabet = 'abcdefghijklmnopqrstuvwxyz'
+available_letters = list(alphabet)
+guesses_left = 8
 wordlist = load_words()
 # your code begins here!
 
-def avail_letters(last_guess):
-    
-    for i in len(alphabet):
-        if alphabet[i] == last_guess:
-            alphabet = alphabet - alphabet[i]
-        else:
-            print alphabet[i]
+##def avail_letters(last_guess, current_letters):
+##    
+##    for i in current_letters:
+##        if current_letters[i] == last_guess:
+##            current_letters = current_letters - current_letters[:i]
+##    return current_letters
 
-def guess(random_word_pick, guesses_left):
+def guess(random_word_pick):
+    global available_letters
+    global guesses_left
+    print 'Available letters:', available_letters
     guess = raw_input('Please guess a letter:')
-    
+    while guess not in available_letters:
+        print 'That letter has already been guessed.'
+        guess = raw_input('Please guess a letter:')
+    available_letters.remove(guess)
+    count = 0
     for i in random_word_pick:
         if guess == i:
-            correct_guess = guess
-        else:
-            correct_guess = 1
-    if correct_guess == guess:
-        print 'Good guess:'
-    else:
+            print 'Good guess:'
+            count = 1
+            
+    if count != 1:
         print 'Oops! That letter is not in my word:'
         
     for i in random_word_pick:
@@ -74,21 +80,31 @@ def guess(random_word_pick, guesses_left):
             print guess
         else:
             print '_',
-    print '----------'
+    print '\n----------'
     guesses_left -= 1
     print 'You have',guesses_left,'guesses left.'
 
 def hangman():
-    alphabet = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+    global available_letters
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    available_letters = alphabet
+    global guesses_left
     guesses_left = 8
     random_word_pick = choose_word(wordlist)
 
     print 'Welcome to the game, Hangman!\nI am thinking of a word that is',
     print len(random_word_pick), 'letters long.\nYou have 8 guesses left.\nAvailable letters:',alphabet
 
-    while guesses_left>0:
-        guess(random_word_pick, guesses_left)
-        
+    while guesses_left>=0:
+        guess(random_word_pick)
+    print 'Game Over, you suck!'
 
-guess('apples', 8)
+##print avail_letters('r',alphabet)
+guess('apples')
+guess('apples')
+guess('apples')
+guess('apples')
+guess('apples')
+guess('apples')
+guess('apples')
 ##hangman()
