@@ -46,7 +46,7 @@ def choose_word(wordlist):
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 available_letters = list(alphabet)
-guesses_left = 8
+incorrect_guesses_left = 8
 wordlist = load_words()
 guessed_letters =[]
 word_construction = []
@@ -63,7 +63,7 @@ def guess(random_word_pick):
     global available_letters
     global word_construction
     global guessed_letters
-    global guesses_left
+    global incorrect_guesses_left
         
     print 'Available letters:', ", ".join(available_letters)
     guess = raw_input('Please guess a letter:')
@@ -84,6 +84,7 @@ def guess(random_word_pick):
                     
     if count != 1:
         print 'Oops! That letter is not in my word:'
+        incorrect_guesses_left -= 1
         
     for i in random_word_pick:
         if i in guessed_letters:
@@ -98,41 +99,40 @@ def guess(random_word_pick):
             word_construction[current_indice] = ' '
         current_indice += 1
 
-    guesses_left -= 1
+    
     if list(random_word_pick) == word_construction:
-        guesses_left = -1
+        incorrect_guesses_left = -1
         
     print '\n----------'
     
 
-    if guesses_left == 0:
+    if incorrect_guesses_left == 0:
         print 'You are out of guesses, better luck next time!'
         
-    elif guesses_left == -1:
+    elif incorrect_guesses_left == -1:
         print 'Congratulations, you guessed the word!'
         
     else:
-        print 'You have',guesses_left,'guesses left.'
+        print 'You have',incorrect_guesses_left,'incorrect guesses left.'
 
 def hangman():
     global available_letters
     global guessed_letters
     global word_construction
+    global incorrect_guesses_left
     guessed_letters =[]
     alphabet = 'abcdefghijklmnopqrstuvwxyz'
     available_letters = list(alphabet)
-    global guesses_left
-    guesses_left = 8
     random_word_pick = choose_word(wordlist)
     print 'the random word pick is', random_word_pick
     for i in random_word_pick:
         word_construction.append(' ')
 
     print 'Welcome to the game, Hangman!\nI am thinking of a word that is',
-    print len(random_word_pick), 'letters long.\nYou have 8 guesses left.\n'
+    print len(random_word_pick), 'letters long.\nYou have 8 incorrect guesses left.\n'
 
     
-    while guesses_left>0:
+    while incorrect_guesses_left>0:
         guess(random_word_pick)
 
 
