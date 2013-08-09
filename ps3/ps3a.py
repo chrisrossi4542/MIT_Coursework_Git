@@ -76,7 +76,17 @@ def get_word_score(word, n):
     word: string (lowercase letters)
     returns: int >= 0
     """
-    # TO DO...
+    word_score = 0
+    for i in word:
+        word_score += SCRABBLE_LETTER_VALUES[i]
+    word_score *= len(word)
+
+    if len(word) == n:
+        word_score += 50
+    
+    return word_score
+ 
+    
     
 #
 # Make sure you understand how this function works and what it does!
@@ -228,3 +238,7 @@ def play_game(word_list):
 if __name__ == '__main__':
     word_list = load_words()
     play_game(word_list)
+
+
+
+print get_word_score("outgnawn", 8)
