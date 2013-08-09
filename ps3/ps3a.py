@@ -155,7 +155,12 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ...
+    new_hand = hand
+    for i in word:
+        new_hand[i] = hand.get(i) - 1
+    return new_hand
+
+
 
 #
 # Problem #3: Test word validity
@@ -241,4 +246,4 @@ if __name__ == '__main__':
 
 
 
-print get_word_score("outgnawn", 8)
+
