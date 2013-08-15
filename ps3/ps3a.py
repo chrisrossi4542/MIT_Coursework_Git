@@ -233,8 +233,28 @@ def play_hand(hand, word_list):
       word_list: list of lowercase strings
       
     """
+    global HAND_SIZE
+    word = ' '
+    total_points = 0
 
 
+    while word != '.':
+        print'Current Hand:', display_hand(hand)
+        word = raw_input('Enter word, or a "." to indicate that you are finished:')
+        
+
+        if is_valid_word(word, hand, word_list) == True:
+            total_points += get_word_score(word, HAND_SIZE)
+            HAND_SIZE -= len(word)
+            update_hand(hand, word)
+            print '"', word, '" earned',get_word_score(word, HAND_SIZE), 'points. Total:', total_points, 'points'
+    
+        elif word != '.':
+            print 'Invalid word, please try again.'
+
+
+    
+    
 
 
 
@@ -268,6 +288,7 @@ if __name__ == '__main__':
 
 
 hand = {'n': 1, 'h': 1, 'o': 1, 'y': 1, 'd':1, 'w':1, 'e': 2}
-word = "honeyd"
-print is_valid_word('honey',hand,word_list)
+##word = "honeyd"
+##print is_valid_word('honey',hand,word_list)
 
+play_hand(hand, word_list)
