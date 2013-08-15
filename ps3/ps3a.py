@@ -185,12 +185,12 @@ def is_valid_word(word, hand, word_list):
     for i in word:
         if hand.get(i,0) > 0:
             hand[i] -= 1
-            letter_in_hand = True
+            #letter_in_hand = True
         else:
             letter_not_in_hand = True
             
             
-    if letter_not_in_hand == False & in_word_list == True:
+    if letter_not_in_hand == False: # & in_word_list == True:
         return True
     else:
         return False
@@ -264,5 +264,7 @@ if __name__ == '__main__':
     play_game(word_list)
 
 
-
+hand = {'n': 1, 'h': 1, 'o': 1, 'y': 1, 'd':1, 'w':1, 'e': 2}
+word = "honeyd"
+print is_valid_word('honey',hand,word_list)
 
