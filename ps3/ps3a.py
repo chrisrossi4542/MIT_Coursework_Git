@@ -182,6 +182,8 @@ def is_valid_word(word, hand, word_list):
         if i == word:
             in_word_list = True
 
+##need to fix this. right now it doesnt check whether *all* the letters in the word exist before subtracting letters from your hand
+##plus the if statement will cause a single instance of a letter to remove all instances of that letter
     for i in word:
         if hand.get(i,0) > 0:
             hand[i] -= 1
@@ -253,7 +255,7 @@ def play_hand(hand, word_list):
             print 'Invalid word, please try again.'
 
 
-    
+    print "Total score: ", total_points, "."
     
 
 
@@ -277,7 +279,36 @@ def play_game(word_list):
 
     * If the user inputs anything else, ask them again.
     """
-    # TO DO...
+    game_options = 'z'
+    global HAND_SIZE
+    print 'Welcome to the word game!\n Options are as follows:\n'
+    print 'Enter "n" to play a new random hand\n'
+    print 'Enter "r" to play the last hand again\n'
+    print 'Enter "e" to exit the game\n'
+
+    while game_options != 'e':
+        game_options = raw_input('Please select an option: ')
+
+##I feel pretty strongly that I need to use recursion here. Need to go back and make sure I understand that
+
+    
+        if game_options == 'n':
+            #do this thing
+            current_hand = deal_hand(HAND_SIZE)
+            play_hand(current_hand, word_list)
+
+        elif game_options == 'r':
+            #do this thing
+            return 0
+
+        elif game_options == 'e':
+            #quit game
+            return 0
+
+        else:
+        
+            game_options = raw_input('Please select an option: ')
+
 
 #
 # Build data structures used for entire session and play game
@@ -287,7 +318,7 @@ if __name__ == '__main__':
     play_game(word_list)
 
 
-hand = {'n': 1, 'h': 1, 'o': 1, 'y': 1, 'd':1, 'w':1, 'e': 2}
+hand = {'a': 1, 'c': 1, 'i': 1, 'h': 1, 'm':2, 'z':1}
 ##word = "honeyd"
 ##print is_valid_word('honey',hand,word_list)
 
