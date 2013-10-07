@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 def check_name():
     soup = BeautifulSoup(urllib2.urlopen('http://www.kbco.com/pages/lookforyourname.html').read())
 
-    name_search = soup.find_all(text=re.compile("Christopher Rossi"), limit = 1)
+    name_search = soup.find_all(text=re.compile("Matthew Hooker"), limit = 1)
     if name_search != []:
         return True
 
