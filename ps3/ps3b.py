@@ -16,7 +16,23 @@ def comp_choose_word(hand, word_list):
     hand: dictionary (string -> int)
     word_list: list (string)
     """
-    # TO DO...
+    n = len(hand)
+    print n
+    chosen_word = ''
+    while n > 0:
+        list_of_possible_words = get_perms(hand, n)
+        n -= 1
+        print n
+        for i in list_of_possible_words:
+            #print i, "for i in list"
+            if is_valid_word(i, hand, word_list) == True:
+                print i, " is valid word"
+                chosen_word = i
+                return chosen_word
+
+word_list = load_words()
+hand = {'a': 1, 'c': 1, 't': 1, 'h': 0, 'm':0, 'z':0}
+print comp_choose_word(hand, word_list)
 
 #
 # Problem #6B: Computer plays a hand
@@ -69,8 +85,8 @@ def play_game(word_list):
 #
 # Build data structures used for entire session and play game
 #
-if __name__ == '__main__':
-    word_list = load_words()
-    play_game(word_list)
+##if __name__ == '__main__':
+##    word_list = load_words()
+##    play_game(word_list)
 
     
