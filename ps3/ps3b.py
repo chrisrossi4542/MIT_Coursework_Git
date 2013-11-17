@@ -21,9 +21,11 @@ def comp_choose_word(hand, word_list):
     while n > 0:
         list_of_possible_words = get_perms(hand, n)
         n -= 1
+        check_for_valid_word = ' '
         for i in list_of_possible_words:
-            if is_valid_word(i, hand, word_list) == True:
-                return i
+           check_for_valid_word = is_valid_word(i, hand, word_list)
+           if check_for_valid_word == True:
+               return i
     return None
 
 
@@ -109,7 +111,7 @@ def play_game(word_list):
             elif game_options == 'c':
                 dealt_hand = deal_hand(HAND_SIZE)
                 current_hand = dealt_hand.copy()
-                comp_play_hand(current_hand, wordlist)
+                comp_play_hand(current_hand, word_list)
             else:
                 print 'Enter "u" to play the hand yourself\n'
                 print 'Enter "c" to have the computer play a hand\n'

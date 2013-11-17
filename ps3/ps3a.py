@@ -185,6 +185,7 @@ def is_valid_word(word, hand, word_list):
     if in_word_list == False:
         return False
         exit
+    return True
 
 ##this still doesnt work if the word has two r's but only one r is in my hand. 
 
@@ -333,9 +334,9 @@ def play_game(word_list):
 #
 # Build data structures used for entire session and play game
 #
-if __name__ == '__main__':
-    word_list = load_words()
-    play_game(word_list)
+##if __name__ == '__main__':
+##    word_list = load_words()
+##    play_game(word_list)
 
 ##word_list = load_words()
 ##hand = {'a': 1, 'c': 1, 'i': 1, 'h': 1, 'm':2, 'z':1}
