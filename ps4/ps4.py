@@ -99,7 +99,24 @@ def get_fable_string():
 #
 # Problem 1: Encryption
 #
+##alphabet = 'abcdefghijklmnopqrstuvwxyz'
+##available_letters = list(alphabet)
+
 def build_coder(shift):
+    alphabet = {}
+    coder = {}
+    letters_in_alph = 26
+    for i in range(ord('a'), ord('z') +1):
+        alphabet[chr(i)] = chr(i)
+
+    for i in alphabet:
+        if (ord(i) + shift) > ord('z'):
+            coder[i] = chr(ord(i) - letters_in_alph + shift)
+        else:
+            coder[i] = chr(ord(i) +shift)
+    return coder
+ 
+
     """
     Returns a dict that can apply a Caesar cipher to a letter.
     The cipher is defined by the shift value. Ignores non-letter characters
@@ -120,7 +137,6 @@ def build_coder(shift):
     'v': 'y', 'y': 'a', 'x': ' ', 'z': 'b'}
     (The order of the key-value pairs may be different.)
     """
-    ### TODO.
 
 def build_encoder(shift):
     """
@@ -149,7 +165,7 @@ def build_encoder(shift):
 
     HINT : Use build_coder.
     """
-    ### TODO.
+    return build_coder(shift)
 
 def build_decoder(shift):
     """
@@ -180,7 +196,7 @@ def build_decoder(shift):
     HINT : Use build_coder.
     """
     ### TODO.
- 
+    return build_coder(shift)
 
 def apply_coder(text, coder):
     """
@@ -196,7 +212,18 @@ def apply_coder(text, coder):
     >>> apply_coder("Khoor,czruog!", build_decoder(3))
     'Hello, world!'
     """
-    ### TODO.
+    coded_text = ' '
+    
+    for i in text:
+        coded_text += coder[i]
+    return coded_text
+        
+
+test_text = "zzzz"
+coder = {}
+coder = build_coder(1)
+
+print apply_coder(test_text, coder)
   
 
 def apply_shift(text, shift):
@@ -216,7 +243,7 @@ def apply_shift(text, shift):
     >>> apply_shift('This is a test.', 8)
     'Apq hq hiham a.'
     """
-    ### TODO.
+    
    
 #
 # Problem 2: Codebreaking.
