@@ -219,11 +219,11 @@ def apply_coder(text, coder):
     return coded_text
         
 
-test_text = "zzzz"
-coder = {}
-coder = build_coder(1)
-
-print apply_coder(test_text, coder)
+##test_text = "zzzz"
+##coder = {}
+##coder = build_coder(1)
+##
+##print apply_coder(test_text, coder)
   
 
 def apply_shift(text, shift):
@@ -243,7 +243,16 @@ def apply_shift(text, shift):
     >>> apply_shift('This is a test.', 8)
     'Apq hq hiham a.'
     """
-    
+    apply_shift_coder = build_coder(shift)
+    return apply_coder(text, apply_shift_coder)
+
+
+test_text = "zazazaz"
+##coder = {}
+##coder = build_coder(1)
+##
+shift = 2
+print apply_shift(test_text, shift)
    
 #
 # Problem 2: Codebreaking.
