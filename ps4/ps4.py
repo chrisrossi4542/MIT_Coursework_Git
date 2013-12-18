@@ -105,8 +105,10 @@ def get_fable_string():
 def build_coder(shift):
     alphabet = {}
     coder = {}
-    letters_in_alph = 26
-    for i in range(ord('a'), ord('z') +1):
+    letters_in_alph = 91
+    #used to be 26
+    for i in range(ord(' '), ord('z') +1):
+        #used to be starting at 'a'
         alphabet[chr(i)] = chr(i)
 
     for i in alphabet:
@@ -196,7 +198,7 @@ def build_decoder(shift):
     HINT : Use build_coder.
     """
     ### TODO.
-    return build_coder(shift)
+    return build_coder(92 - shift)
 
 def apply_coder(text, coder):
     """
@@ -215,8 +217,11 @@ def apply_coder(text, coder):
     coded_text = ' '
     
     for i in text:
+        ##What i need to do here is have an if statement for spaces and special characters
         coded_text += coder[i]
+        print coded_text
     return coded_text
+    #return 'coded text =', coded_text
         
 
 ##test_text = "zzzz"
@@ -247,12 +252,12 @@ def apply_shift(text, shift):
     return apply_coder(text, apply_shift_coder)
 
 
-test_text = "zazazaz"
-##coder = {}
-##coder = build_coder(1)
-##
-shift = 2
-print apply_shift(test_text, shift)
+##test_text = "zazazaz"
+####coder = {}
+####coder = build_coder(1)
+####
+##shift = 2
+##print apply_shift(test_text, shift)
    
 #
 # Problem 2: Codebreaking.
@@ -274,7 +279,35 @@ def find_best_shift(wordlist, text):
     'Hello, world!'
     """
     ### TODO
-   
+    list_of_words = ()
+    n = 0
+    decoded_text = {}
+
+    # < 24 is what this used to be
+    while n < 89:
+        decoded_text = apply_coder(text, build_decoder(n))
+        print "decoded text is", decoded_text
+        list_of_words = string.split(decoded_text)
+        print "list of words is", list_of_words
+        check_current_word = False
+        n += 1
+
+        for i in list_of_words:
+            check_current_word = is_word(wordlist, i)
+            if check_current_word == True:
+                return n
+
+
+text = 'hello, world'
+s = apply_coder(text, build_encoder(1))
+print "encoded text is", s
+best_shift = find_best_shift(wordlist, s)
+
+print "best shift is", best_shift
+#apply_coder(s, build_decoder(8))
+
+            
+           
 #
 # Problem 3: Multi-level encryption.
 #
