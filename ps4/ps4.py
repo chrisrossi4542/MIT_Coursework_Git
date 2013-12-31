@@ -251,13 +251,6 @@ def apply_shift(text, shift):
     return apply_coder(text, apply_shift_coder)
 
 
-##test_text = "zazazaz"
-####coder = {}
-####coder = build_coder(1)
-####
-##shift = 2
-##print apply_shift(test_text, shift)
-   
 #
 # Problem 2: Codebreaking.
 #
@@ -279,31 +272,33 @@ def find_best_shift(wordlist, text):
     """
     ### TODO
     list_of_words = ()
-    n = 0
+    shift_amount = 0
     decoded_text = {}
 
     # < 24 is what this used to be
-    while n < 92:
-        decoded_text = apply_coder(text, build_decoder(n))
-        print "decoded text is", decoded_text
+    while shift_amount <= 27:
+        decoded_text = apply_coder(text, build_decoder(shift_amount))
+
+        #print shift_amount,"decoded text is", decoded_text
         list_of_words = string.split(decoded_text)
-        print "list of words is", list_of_words
+        #print shift_amount,"list of words is", list_of_words
         check_current_word = False
-        n += 1
 
         for i in list_of_words:
             check_current_word = is_word(wordlist, i)
             if check_current_word == True:
-                return n
+                return shift_amount
+
+        shift_amount += 1
 
 
-##text = 'hello, world'
-##s = apply_coder(text, build_encoder(2))
-##print "encoded text is", s
-##best_shift = find_best_shift(wordlist, s)
-
-##print "best shift is", best_shift
-#apply_coder(s, build_decoder(8))
+"""
+text = 'hello, world'
+s = apply_coder(text, build_encoder(12))
+print "encoded text is", s
+best_shift = find_best_shift(wordlist, s)
+print "best shift is", best_shift
+"""
 
             
            
@@ -341,12 +336,14 @@ def apply_shifts(text, shifts):
             #print "letter number and shift amount are",letter_number, shift_amount
             if letter_number <= index:
                 final_shift_amount += shift_amount
+        if final_shift_amount > 27:
+          final_shift_amount  = final_shift_amount % 27
         #print "shifting letter", index, "by", final_shift_amount
         apply_shift_coder = build_coder(final_shift_amount)
         final_encoded_text += apply_coder(letter, apply_shift_coder)
     return final_encoded_text
         
-print apply_shifts("Do Androids Dream of Electric Sheep?", [(0,6), (3, 18), (12, 16)])
+#print apply_shifts("Do Androids Dream of Electric Sheep?", [(0,6), (3, 18), (12, 16)])
         
 #
 # Problem 4: Multi-level decryption.
@@ -397,7 +394,21 @@ def find_best_shifts_rec(wordlist, text, start):
     returns: list of tuples.  each tuple is (position in text, amount of shift)
     """
     ### TODO.
+    bestshift = find_best_shift(wordlist, text[start:])
+    this_tuple = (start, bestshift)
+    print "found BS", this_tuple
+    ### XXX TODO: now we need to know the word length, so we know our next starting point
+    ### XXX Let's try starting @ the end, and working our way backwards thru the text
+    #shifts = find_best_shifts_rec(wordlist, text[start+WORDLENGTH:], 0)
 
+    return None 
+
+
+s = apply_shifts("Do Androids Dream of Electric Sheep?", [(0,6), (3, 18), (12, 16)])
+print s
+shifts = find_best_shifts_rec(wordlist, s, 0)
+print "SHIFTZ",shifts
+print apply_shifts(s, shifts)
 
 def decrypt_fable():
      """
