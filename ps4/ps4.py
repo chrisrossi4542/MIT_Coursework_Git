@@ -198,7 +198,7 @@ def build_decoder(shift):
     HINT : Use build_coder.
     """
     ### TODO.
-    return build_coder(92 - shift)
+    return build_coder(89 - shift)
 
 def apply_coder(text, coder):
     """
@@ -214,12 +214,11 @@ def apply_coder(text, coder):
     >>> apply_coder("Khoor,czruog!", build_decoder(3))
     'Hello, world!'
     """
-    coded_text = ' '
+    coded_text = ''
     
     for i in text:
-        ##What i need to do here is have an if statement for spaces and special characters
         coded_text += coder[i]
-        print coded_text
+        #print coded_text
     return coded_text
     #return 'coded text =', coded_text
         
@@ -284,7 +283,7 @@ def find_best_shift(wordlist, text):
     decoded_text = {}
 
     # < 24 is what this used to be
-    while n < 89:
+    while n < 92:
         decoded_text = apply_coder(text, build_decoder(n))
         print "decoded text is", decoded_text
         list_of_words = string.split(decoded_text)
@@ -298,12 +297,12 @@ def find_best_shift(wordlist, text):
                 return n
 
 
-text = 'hello, world'
-s = apply_coder(text, build_encoder(1))
-print "encoded text is", s
-best_shift = find_best_shift(wordlist, s)
+##text = 'hello, world'
+##s = apply_coder(text, build_encoder(2))
+##print "encoded text is", s
+##best_shift = find_best_shift(wordlist, s)
 
-print "best shift is", best_shift
+##print "best shift is", best_shift
 #apply_coder(s, build_decoder(8))
 
             
@@ -328,7 +327,27 @@ def apply_shifts(text, shifts):
     'JufYkaolfapxQdrnzmasmRyrpfdvpmEurrb?'
     """
     ### TODO.
- 
+##    apply_shift_coder = build_coder(shift)
+##    return apply_coder(text, apply_shift_coder)
+
+    final_encoded_text = ''
+    for index, letter in enumerate(text):
+        #print"letter is", letter
+        #print "index is", index
+        final_shift_amount = 0
+        for shift in shifts:
+            #print "shift is", shift
+            (letter_number, shift_amount) = shift
+            #print "letter number and shift amount are",letter_number, shift_amount
+            if letter_number <= index:
+                final_shift_amount += shift_amount
+        #print "shifting letter", index, "by", final_shift_amount
+        apply_shift_coder = build_coder(final_shift_amount)
+        final_encoded_text += apply_coder(letter, apply_shift_coder)
+    return final_encoded_text
+        
+print apply_shifts("Do Androids Dream of Electric Sheep?", [(0,6), (3, 18), (12, 16)])
+        
 #
 # Problem 4: Multi-level decryption.
 #
