@@ -102,22 +102,18 @@ def get_fable_string():
 ##alphabet = 'abcdefghijklmnopqrstuvwxyz'
 ##available_letters = list(alphabet)
 
-def build_coder(shift):
-    alphabet = {}
+def build_coder_slave(alphabet, shift):
     coder = {}
-    letters_in_alph = 91
-    #used to be 26
-    for i in range(ord(' '), ord('z') +1):
-        #used to be starting at 'a'
-        alphabet[chr(i)] = chr(i)
-
-    for i in alphabet:
-        if (ord(i) + shift) > ord('z'):
-            coder[i] = chr(ord(i) - letters_in_alph + shift)
-        else:
-            coder[i] = chr(ord(i) +shift)
+    for loc,char in enumerate(alphabet):
+      if (loc+shift >= len(alphabet)):
+        loc = loc - len(alphabet)
+      coder[char] = alphabet[loc+shift]
     return coder
- 
+
+def build_coder(shift):
+    coder = build_coder_slave( string.uppercase+' ' , shift)
+    coder.update( build_coder_slave(string.lowercase+' ', shift) )
+    return coder
 
     """
     Returns a dict that can apply a Caesar cipher to a letter.
@@ -169,6 +165,7 @@ def build_encoder(shift):
     """
     return build_coder(shift)
 
+
 def build_decoder(shift):
     """
     Returns a dict that can be used to decode an encrypted text. For example, you
@@ -198,7 +195,15 @@ def build_decoder(shift):
     HINT : Use build_coder.
     """
     ### TODO.
-    return build_coder(89 - shift)
+    """
+    newcoder = {}
+    coder = build_coder(shift)
+    for key , value in coder.items():
+       newcoder[value] = key
+    """
+    coder = {v:k for k, v in build_coder(shift).items() }
+    return coder
+
 
 def apply_coder(text, coder):
     """
@@ -217,19 +222,14 @@ def apply_coder(text, coder):
     coded_text = ''
     
     for i in text:
-        coded_text += coder[i]
+        if not i in coder:
+          coded_text += i
+        else:
+          coded_text += coder[i]
         #print coded_text
     return coded_text
     #return 'coded text =', coded_text
         
-
-##test_text = "zzzz"
-##coder = {}
-##coder = build_coder(1)
-##
-##print apply_coder(test_text, coder)
-  
-
 def apply_shift(text, shift):
     """
     Given a text, returns a new text Caesar shifted by the given shift
