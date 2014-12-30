@@ -378,10 +378,20 @@ def find_best_shifts(wordlist, text):
     >>> print apply_shifts(s, shifts)
     Do Androids Dream of Electric Sheep?
     """
+    text_for_chopping = text
+    start = 0
+    tuple_of_shifts = () ##is this right?
+    while len(text_for_chopping) >= 0:
+        tuple_of_shifts += find_best_shifts_rec(wordlist, text_for_chopping, start)
+        print "current tuple",tuple_of_shifts
+        #apply_shift(text_for_chopping, tuple_of_shifts(0)
+    return None
+        
+        
 
 def find_best_shifts_rec(wordlist, text, start):
     """
-    Given a scrambled string and a starting position from which
+    Given a scrambled string and a starting position fro ,km which
     to decode, returns a shift key that will decode the text to
     words in wordlist, or None if there is no such key.
 
@@ -394,7 +404,7 @@ def find_best_shifts_rec(wordlist, text, start):
     returns: list of tuples.  each tuple is (position in text, amount of shift)
     """
     ### TODO.
-    bestshift = find_best_shift(wordlist, text[start:])
+    bestshift = find_best_shift(wordlist, text[start:len(text)]) #added len(text)
     this_tuple = (start, bestshift)
     print "found BS", this_tuple
     ### XXX TODO: now we need to know the word length, so we know our next starting point
@@ -405,8 +415,8 @@ def find_best_shifts_rec(wordlist, text, start):
 
 
 s = apply_shifts("Do Androids Dream of Electric Sheep?", [(0,6), (3, 18), (12, 16)])
-print s
-shifts = find_best_shifts_rec(wordlist, s, 0)
+print 'encoded text is ',s
+shifts = find_best_shifts(wordlist, s)
 print "SHIFTZ",shifts
 print apply_shifts(s, shifts)
 
